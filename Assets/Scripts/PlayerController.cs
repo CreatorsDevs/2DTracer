@@ -12,19 +12,42 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailRenderer tr;
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
+    private Collider2D[] hitEnemies = new Collider2D[10];
     private Animator animator;
-
-    private bool isDashing = false;
+    public bool IsDashing { get; private set; }
     
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
+    private void FixedUpdate() 
+    {
+        // Adjust the size based on the maximum number of enemies you expect
+        int count = Physics2D.OverlapCircleNonAlloc(transform.position, 0.5f, hitEnemies, enemyLayer);
+            
+        for (int i = 0; i < count; i++)
+        {
+            Collider2D enemy = hitEnemies[i];
+
+            if(IsDashing)
+            {
+                // Destroy the enemy
+                Destroy(enemy.gameObject);
+            }
+            else
+            {
+                //TODO
+                Debug.Log("Decrease health");
+            }
+        }
+    }
+
     void Update()
     {
-        if (isDashing)
+        if (IsDashing)
             return;
         
         //Player Movement
@@ -34,7 +57,7 @@ public class PlayerController : MonoBehaviour
         // Calculate the distance between the player and the cursor
         float distanceToCursor = Vector2.Distance(transform.position, mousePosition);
 
-        if (Input.GetMouseButtonDown(0) && distanceToCursor >= 5f)
+        if (Input.GetMouseButtonDown(0) && distanceToCursor >= 4f)
         {
             StartCoroutine(DashTowardsMousePosition(mousePosition));
         }
@@ -42,8 +65,6 @@ public class PlayerController : MonoBehaviour
         {
             MoveTowardsPosition(mousePosition);
         }
-
-        //transform.position = Vector2.SmoothDamp(transform.position, mousePosition, ref currentVelocity, smoothTime, maxMoveSpeed);
 
         //Player Rotation
         Vector2 playerToMouseDirection = mousePosition - transform.position;
@@ -69,17 +90,29 @@ public class PlayerController : MonoBehaviour
 
     private void MoveTowardsPosition(Vector3 targetPosition)
     {
+        // Get the camera's viewport boundaries
+        Vector3 minViewport = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, transform.position.z));
+        Vector3 maxViewport = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, transform.position.z));
+
+        // Add padding to the viewport boundaries
+        minViewport += new Vector3(1, 1, 0);
+        maxViewport -= new Vector3(1, 1, 0);
+
+        // Clamp the target position within the viewport boundaries
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minViewport.x, maxViewport.x);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minViewport.y, maxViewport.y);
+
         transform.position = Vector2.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime, maxMoveSpeed);
     }
 
     private IEnumerator DashTowardsMousePosition(Vector3 targetPosition)
     {
-        isDashing = true;
+        IsDashing = true;
         float dashTimer = 0f;
         float originalMaxMoveSpeed = maxMoveSpeed;
 
         AudioManager.instance.Play(SoundNames.DashSound);
-        tr.emitting= true;
+        tr.emitting= true;     
 
         while (dashTimer < dashDuration)
         {
@@ -91,24 +124,11 @@ public class PlayerController : MonoBehaviour
             // Move the player with increased speed
             transform.Translate(dashDirection * (maxMoveSpeed * dashSpeedMultiplier * Time.deltaTime));
 
-            // Check for enemy collisions
-            CheckEnemyCollisions();
-
             yield return null;
         }
 
-        isDashing = false;
+        IsDashing = false;
         tr.emitting = false;
         maxMoveSpeed = originalMaxMoveSpeed;
-    }
-
-    private void CheckEnemyCollisions()
-    {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, 0.5f, enemyLayer);
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            // Destroy the enemy
-            Destroy(enemy.gameObject);
-        }
     }
 }

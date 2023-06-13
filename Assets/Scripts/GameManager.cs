@@ -9,9 +9,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
     [SerializeField] private GameObject playPanelUI;
-    [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject playerPrefab;
     private bool isGamePaused = false; // Variable to track if the game has been paused
     private bool isGameStarted = false; // Variable to track if the game has started
+    public static GameManager instance;
+    public GameObject player;
+    
+
+    private void Awake()
+    {
+     if(instance == null)
+     {
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+     }
+     else
+     {
+        Destroy(gameObject);
+     }
+    }
     
     void Start()
     {
@@ -56,15 +72,14 @@ public class GameManager : MonoBehaviour
     // Functionality for the Play button in order to start playing the game!
     public void PlayGame()
     {
-        playerObject.SetActive(true);
         playPanelUI.SetActive(false);
         isGameStarted = true; // Set the game as started when the play button is clicked
+        player = Instantiate(playerPrefab, playerPrefab.transform.position, Quaternion.identity);
     }
 
     // Functionality for the Quit button in order to quit the game!
     public void QuitGame()
     {
-        playerObject.SetActive(false);
         Application.Quit();
     }
 }
