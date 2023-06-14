@@ -17,13 +17,12 @@ public class PlayerController : MonoBehaviour
     private Collider2D[] hitEnemies = new Collider2D[MaxHitEnemies];
     private Animator animator;
     private Coroutine takeDamageCoroutine;
-
     private bool decreaseHealth = false;
     private float timerForEnemyOverlap = 0.0f;
     private float waitTimeForDecreasingHealth = 0.5f;
+
     public bool IsDashing { get; private set; }
     
-
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,6 +45,7 @@ public class PlayerController : MonoBehaviour
             {
                 // Destroy the enemy
                 Destroy(enemy.gameObject);
+                ScoreController.Instance.ScoreUp();
             }
             else
             {
