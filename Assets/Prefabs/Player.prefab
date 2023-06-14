@@ -108,6 +108,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   tr: {fileID: 196916510171575587}
+  whiteParticle: {fileID: 2619273212187503225, guid: 8dbb8aa912ab0d64c8c1d7cb06a570bf, type: 3}
+  yellowParticle: {fileID: 627119540325219991, guid: e65e2571ab153f94d93e2835145356f2, type: 3}
 --- !u!95 &196916510171575588
 Animator:
   serializedVersion: 5
