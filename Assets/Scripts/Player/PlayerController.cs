@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private TrailRenderer tr;
+    [SerializeField] private GameObject whiteParticle;
+    [SerializeField] private GameObject yellowParticle;
+    [SerializeField] private float fadeInTime = 0.1f;
+    [SerializeField] private float fadeOutTime = 0.4f;
     private int currentHealth = 3; // Player's current health
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
@@ -45,6 +49,8 @@ public class PlayerController : MonoBehaviour
             {
                 // Destroy the enemy
                 Destroy(enemy.gameObject);
+                AudioManager.instance.Play(SoundNames.enemyHurtSound);
+                Instantiate(whiteParticle, enemy.transform.position, Quaternion.identity);
                 ScoreController.Instance.ScoreUp();
             }
             else
@@ -67,6 +73,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(Time.timeScale <= 0)
+         return;
+        
         if(decreaseHealth)
         {
             timerForEnemyOverlap += Time.deltaTime;
@@ -170,6 +179,8 @@ public class PlayerController : MonoBehaviour
         if (currentHealth > 0)
         {
             currentHealth--;
+            AudioManager.instance.Play(SoundNames.playerTookDamageSound);
+            StartCoroutine(FadeInFadeOut());
 
             // TODO: Update health UI or perform other actions when the player's health decreases
             GameManager.instance.HandleHealthUI(currentHealth);
@@ -179,10 +190,33 @@ public class PlayerController : MonoBehaviour
             if (currentHealth == 0)
             {
                 // TODO: Implement player death logic
+                AudioManager.instance.Play(SoundNames.playerDeathSound);
                 Debug.Log("Player died.");
                 Destroy(gameObject);
+                Instantiate(yellowParticle, transform.position, Quaternion.identity);
                 GameManager.instance.GameOver();
             }
+        }
+    }
+
+    private IEnumerator FadeInFadeOut()
+    {
+        float time = 0.0f;
+
+        while (time <= fadeInTime)
+        {
+            spriteRenderer.color = Color.Lerp(Color.white, Color.red, time / fadeInTime);
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        time = 0.0f;
+
+        while (time <= fadeOutTime)
+        {
+            spriteRenderer.color = Color.Lerp(Color.red, Color.white, time / fadeOutTime);
+            time += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
         }
     }
 }

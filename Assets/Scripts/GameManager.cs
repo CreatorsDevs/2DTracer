@@ -104,4 +104,9 @@ public class GameManager : MonoBehaviour
         IsGameOver = true;
         gameOverPanelUI.SetActive(true);
     }
+
+    public void PlayButtonSound()
+    {
+        AudioManager.instance.Play(SoundNames.buttonSound);
+    }
 }

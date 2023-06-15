@@ -24,11 +24,11 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemiesWithDelay()
     {
-        SpawnEnemy();
-        yield return new WaitForSeconds(spawnInterval);
+        if(!GameManager.instance.IsGameOver && GameManager.instance.IsGameStarted)
+            SpawnEnemy();
 
-        if(!GameManager.instance.IsGameOver)
-            yield return StartCoroutine(SpawnEnemiesWithDelay());
+        yield return new WaitForSeconds(spawnInterval);
+        yield return StartCoroutine(SpawnEnemiesWithDelay());
     }
 
     private void SpawnEnemy()
