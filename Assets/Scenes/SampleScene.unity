@@ -1191,6 +1191,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 363488126}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &390276679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1663,7 +1675,7 @@ GameObject:
   - component: {fileID: 546253613}
   - component: {fileID: 546253612}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: Space Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6716,6 +6728,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 363488126}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &773542401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7258,6 +7282,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 363488126}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1012830147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7410,7 +7446,7 @@ MonoBehaviour:
   - {fileID: 7073679514648248040, guid: a90ec501f126d934db479e362cc7ba1c, type: 3}
   mainCamera: {fileID: 519420031}
   maxSpawnDistance: 0.1
-  spawnInterval: 3
+  spawnInterval: 2
 --- !u!4 &1169685592
 Transform:
   m_ObjectHideFlags: 0
@@ -7942,6 +7978,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 363488126}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1665405522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8115,6 +8163,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: PlayerDied
     clip: {fileID: 8300000, guid: 0f6732d58a503df4f83a63fe895eecbc, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Button
+    clip: {fileID: 8300000, guid: bced3e65e6f6d424686d4d109ad227f5, type: 3}
     volume: 1
     pitch: 1
     loop: 0
