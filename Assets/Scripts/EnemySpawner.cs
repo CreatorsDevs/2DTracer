@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemyPrefabs;
-    public Camera mainCamera;
-    public float maxSpawnDistance = 0.1f;
-    public float spawnInterval = 3f;
+    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private float maxSpawnDistance = 0.1f;
+    [SerializeField] private float spawnInterval = 3f;
     private Coroutine spawnEnemiesCoroutine;
 
     private void Start()
@@ -27,7 +27,8 @@ public class EnemySpawner : MonoBehaviour
         SpawnEnemy();
         yield return new WaitForSeconds(spawnInterval);
 
-        yield return StartCoroutine(SpawnEnemiesWithDelay());
+        if(!GameManager.instance.IsGameOver)
+            yield return StartCoroutine(SpawnEnemiesWithDelay());
     }
 
     private void SpawnEnemy()

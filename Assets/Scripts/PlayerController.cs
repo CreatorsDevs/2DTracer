@@ -10,10 +10,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDuration = 0.3f;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private TrailRenderer tr;
+    private int currentHealth = 3; // Player's current health
     private Vector2 currentVelocity;
     private SpriteRenderer spriteRenderer;
-    private Collider2D[] hitEnemies = new Collider2D[10];
+    private const int MaxHitEnemies = 10;
+    private Collider2D[] hitEnemies = new Collider2D[MaxHitEnemies];
     private Animator animator;
+    private Coroutine takeDamageCoroutine;
+
+    private bool decreaseHealth = false;
+    private float timerForEnemyOverlap = 0.0f;
+    private float waitTimeForDecreasingHealth = 0.5f;
     public bool IsDashing { get; private set; }
     
 
@@ -25,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        for(int i = 0; i < MaxHitEnemies; i++)
+            hitEnemies[i] = null;
+
         // Adjust the size based on the maximum number of enemies you expect
         int count = Physics2D.OverlapCircleNonAlloc(transform.position, 0.5f, hitEnemies, enemyLayer);
             
@@ -39,14 +49,37 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //TODO
-                Debug.Log("Decrease health");
+                // Decrease Health.
+                if(!decreaseHealth)
+                {
+                    // Decrease Health
+                    DecreaseHealth();
+
+                    // Tell Update() that certain time should pass 
+                    // after we are able to damage the player again!
+                    decreaseHealth = true;
+                    // Reset the timer.
+                    timerForEnemyOverlap = 0.0f;
+                }
             }
         }
     }
 
     void Update()
     {
+        if(decreaseHealth)
+        {
+            timerForEnemyOverlap += Time.deltaTime;
+
+            if(timerForEnemyOverlap >= waitTimeForDecreasingHealth)
+            {
+                // Reset Timer
+                timerForEnemyOverlap = 0.0f;
+                decreaseHealth = false;
+            }
+        }
+
+
         if (IsDashing)
             return;
         
@@ -57,7 +90,7 @@ public class PlayerController : MonoBehaviour
         // Calculate the distance between the player and the cursor
         float distanceToCursor = Vector2.Distance(transform.position, mousePosition);
 
-        if (Input.GetMouseButtonDown(0) && distanceToCursor >= 4f)
+        if (Input.GetMouseButtonDown(0) && distanceToCursor >= 2.5f)
         {
             StartCoroutine(DashTowardsMousePosition(mousePosition));
         }
@@ -130,5 +163,26 @@ public class PlayerController : MonoBehaviour
         IsDashing = false;
         tr.emitting = false;
         maxMoveSpeed = originalMaxMoveSpeed;
+    }
+
+    private void DecreaseHealth()
+    {
+        if (currentHealth > 0)
+        {
+            currentHealth--;
+
+            // TODO: Update health UI or perform other actions when the player's health decreases
+            GameManager.instance.HandleHealthUI(currentHealth);
+
+            Debug.Log("Player's health decreased. Current health: " + currentHealth);
+
+            if (currentHealth == 0)
+            {
+                // TODO: Implement player death logic
+                Debug.Log("Player died.");
+                Destroy(gameObject);
+                GameManager.instance.GameOver();
+            }
+        }
     }
 }
