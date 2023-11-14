@@ -13,7 +13,7 @@ Space Walker is an exciting mouse-controlled game where you control a player by 
 - The game will end if your health reaches zero.
 
 # Gameplay video
-[![Space Walker]]([link_to_youtube_video](https://www.youtube.com/watch?v=DJEK-wRnuNA))
+[![Space Walker]](https://www.youtube.com/watch?v=DJEK-wRnuNA)
 
 ## Health and Damage
 
