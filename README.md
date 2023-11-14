@@ -12,7 +12,7 @@ Space Walker is an exciting mouse-controlled game where you control a player by 
 - The game offers an endless experience where the player character continuously moves on the screen, following the mouse cursor. There are no multiple levels, and the objective is to navigate and avoid enemies for as long as possible.
 - The game will end if your health reaches zero.
 
-# Gameplay video
+### Gameplay video
 [![Space Walker](https://i9.ytimg.com/vi_webp/DJEK-wRnuNA/mq2.webp?sqp=CNTlzaoG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGHIgaSgjMA8=&rs=AOn4CLC5fxiJsWwTBOA0IK84Osto-wvG8w)](https://www.youtube.com/watch?v=DJEK-wRnuNA)
 
 ## Health and Damage
