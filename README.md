@@ -12,6 +12,9 @@ Space Walker is an exciting mouse-controlled game where you control a player by 
 - The game offers an endless experience where the player character continuously moves on the screen, following the mouse cursor. There are no multiple levels, and the objective is to navigate and avoid enemies for as long as possible.
 - The game will end if your health reaches zero.
 
+# Gameplay video
+[![Space Walker]]([link_to_youtube_video](https://www.youtube.com/watch?v=DJEK-wRnuNA))
+
 ## Health and Damage
 
 - As the player, you start with 3 health points.
@@ -29,23 +32,9 @@ To play Space Walker, visit the link: https://creatorsdevs.itch.io/spacewalker
 - Move your mouse cursor to control the player's movement.
 - Click the mouse button to dash towards enemies.
 
-## Dependencies
-
-Space Walker requires the following dependencies:
-
-- None
-
-## Contributing
-
-Contributions to Space Walker are always welcome. If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
-
 ## License
 
 This project is licensed under the MIT License.
-
-## Acknowledgements
-
-This game was inspired by the mouse control avoidance game genre, where the player character navigates and avoids obstacles by following the mouse cursor.
 
 ---
 
